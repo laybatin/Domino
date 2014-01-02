@@ -4,6 +4,10 @@
 #include <QtGui>
 #include <QLayout>
 #include <QPushButton>
+#include <QTextCodec>
+#include <QFileDialog>
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -12,14 +16,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     MainWindow::setWindowTitle("My App");
 
-    QHBoxLayout * layout = new QHBoxLayout;
 
+    QHBoxLayout * layout = new QHBoxLayout;
     QPushButton * btnEdit = new QPushButton("Edit");
     mEditor = new QTextEdit(this);
 
 
     mLabel = new MyLabel("ddd");
-    mLabel->setText("한글!");
+
+
     layout->addWidget(mLabel);
     layout->addWidget(mEditor);
     layout->addWidget(btnEdit);
@@ -29,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->centralWidget->setLayout(layout);
 
+    //가장 위쪽에 위치하게 함
     mLabel->raise();
 
 
@@ -55,4 +61,14 @@ void MainWindow::applyLabel()
 void MainWindow::lable2TextEdit()
 {
     mEditor->setText( mLabel->text() );
+}
+
+
+void MainWindow::on_actionFolderOpen_triggered()
+{
+    QFileDialog dlg;
+    QString selectedDir;
+    dlg.setFileMode( QFileDialog::Directory );
+    selectedDir = dlg.getExistingDirectory();
+    qDebug() << selectedDir;
 }

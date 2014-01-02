@@ -29,6 +29,7 @@ private slots:
     void applyLabel();
     void lable2TextEdit();
 
+    void on_actionFolderOpen_triggered();
 };
 
 #endif // MAINWINDOW_H
