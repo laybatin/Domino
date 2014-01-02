@@ -21,13 +21,13 @@ public:
 
         return pInstance;
     }
-    static void FreeInstance()
+    /*static*/ void FreeInstance()
     {
+        this->close();
         if(NULL != pInstance)
         {
             delete pInstance;
             pInstance = NULL;
-
         }
     }
 
@@ -48,7 +48,10 @@ private:
     QString selectedFilePath;
 
     CFileForm(QWidget *parent = 0);
+
     ~CFileForm() {}
+    CFileForm(const CFileForm &);       //XX
+    void operator =(const CFileForm &); //XX
 };
 
 #endif // CFILEFORM_H

@@ -25,9 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
     mImage = nullptr;
     mBuffer = nullptr;
 
-    //QHBoxLayout * layout = new QHBoxLayout;
+    QHBoxLayout * hLayout = new QHBoxLayout;
     QVBoxLayout * layout = new QVBoxLayout;
     QPushButton * btnEdit = new QPushButton("Edit");
+    QPushButton * btnNew = new QPushButton("New");
     mFontBox = new QFontComboBox;
     mSpinFontSize = new QSpinBox;
     mSpinFontSize->setMinimum(5);
@@ -45,7 +46,10 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(mImgLabel);
     layout->addWidget(mLabel);
     layout->addWidget(mEditor);
-    layout->addWidget(btnEdit);
+
+    hLayout->addWidget(btnEdit);
+    hLayout->addWidget(btnNew);
+    layout->addLayout(hLayout);
 
 
     ui->centralWidget->setLayout(layout);
@@ -71,11 +75,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_pSingleFileView, SIGNAL(selectedFile()), this, SLOT(applyImgLabel()));
 
 
+
+
 }
 
 MainWindow::~MainWindow()
 {
-    m_pSingleFileView->FreeInstance();
+
+    m_pSingleFileView->FreeInstance();    
     m_pSingleFileView = NULL;
     delete ui;
 }
@@ -108,6 +115,7 @@ void MainWindow::on_actionFolderOpen_triggered()
     {
         m_pSingleFileView->setPath(selectedDir);
         m_pSingleFileView->show();
+        m_pSingleFileView->setAttribute(Qt::WA_DeleteOnClose, true);
     }
 
 //    fileView->getInstance();
@@ -177,4 +185,10 @@ void MainWindow::setFontSize()
     mFont.setFixedPitch(true);
 
     mEditor->setFont(mFont);
+
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    m_pSingleFileView->close();
 }
