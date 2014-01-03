@@ -23,8 +23,8 @@ public:
     }
     /*static*/ void FreeInstance()
     {
-        this->close();
-        if(NULL != pInstance)
+        //if(this->)
+        if(nullptr != pInstance)
         {
             delete pInstance;
             pInstance = NULL;
@@ -37,6 +37,7 @@ public:
 
 signals:
     void selectedFile();
+
 
 private slots:
     void on_listView_doubleClicked(const QModelIndex &index);
@@ -52,6 +53,10 @@ private:
     ~CFileForm() {}
     CFileForm(const CFileForm &);       //XX
     void operator =(const CFileForm &); //XX
+
+
+protected:
+
 };
 
 #endif // CFILEFORM_H

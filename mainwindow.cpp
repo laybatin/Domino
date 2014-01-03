@@ -12,6 +12,8 @@
 #include <QPixmap>
 #include "cfileform.h"
 
+#include <QtTest/QtTest>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -72,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mFontBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(setFontName()));
 
     //다른클래스로 시그널
-    connect(m_pSingleFileView, SIGNAL(selectedFile()), this, SLOT(applyImgLabel()));
+    connect(m_pSingleFileView, SIGNAL(selectedFile()), this, SLOT(applyImgLabel()));    
 
 
 
@@ -81,9 +83,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-
-    m_pSingleFileView->FreeInstance();    
-    m_pSingleFileView = NULL;
+    //m_pSingleFileView = NULL;
     delete ui;
 }
 
@@ -115,7 +115,7 @@ void MainWindow::on_actionFolderOpen_triggered()
     {
         m_pSingleFileView->setPath(selectedDir);
         m_pSingleFileView->show();
-        m_pSingleFileView->setAttribute(Qt::WA_DeleteOnClose, true);
+        //m_pSingleFileView->setAttribute(Qt::WA_DeleteOnClose, true);
     }
 
 //    fileView->getInstance();
@@ -190,5 +190,7 @@ void MainWindow::setFontSize()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    m_pSingleFileView->close();
+    m_pSingleFileView->FreeInstance();
+    m_pSingleFileView = NULL;
 }
+

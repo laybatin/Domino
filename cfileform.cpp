@@ -1,6 +1,25 @@
 #include "cfileform.h"
 #include "ui_cfileform.h"
 #include <QDebug>
+namespace ExtName
+{
+    enum
+    {
+        BEGIN,
+        jpg = BEGIN,
+        png,
+        gif,
+        bmp,
+        END = bmp,
+        CNT = END + 1
+    };
+
+    const QString STRING[CNT]=
+    {
+        "*.jpg", "*.png", "*.gif", "*.bmp"
+    };
+}
+
 
 CFileForm::CFileForm(QWidget *parent) :
     QWidget(parent),
@@ -9,15 +28,18 @@ CFileForm::CFileForm(QWidget *parent) :
     ui->setupUi(this);
     ui->listView->setModel(&this->mFileView);
     this->mFileView.setFilter(QDir::Files);
+
     //확장자 제한
     QStringList filters;
-    filters << "*.png" << "*.jpg" << "*.bmp";
+    for(unsigned int i = ExtName::BEGIN; i<ExtName::CNT; i++)
+        filters << ExtName::STRING[i];
+
+
     this->mFileView.setNameFilters(filters);
 
 
     //이름순 정렬
     //this->mFileView.sort(0, Qt::DescendingOrder);
-
     //connect(listView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT()
 }
 
@@ -49,3 +71,4 @@ const QString CFileForm::getPath()
 {
     return selectedFilePath;
 }
+

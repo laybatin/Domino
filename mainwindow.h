@@ -44,6 +44,7 @@ private:
     QFontComboBox * mFontBox;
     QFont mFont;
 
+
 private slots:
     void applyLabel();
     void applyImgLabel();
@@ -52,6 +53,8 @@ private slots:
 
     void setFontSize();
     void setFontName();
+
+
 };
 
 #endif // MAINWINDOW_H
